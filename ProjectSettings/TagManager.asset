@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Water
   - Coin
+  - Background
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - Background
   - 
   - 
   - 
@@ -42,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1438980341
+    locked: 0
   - name: Water
     uniqueID: 3034953391
     locked: 0

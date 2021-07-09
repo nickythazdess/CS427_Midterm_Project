@@ -7,7 +7,8 @@ public class CharacterMove : MonoBehaviour
 {
     [SerializeField] private LayerMask platform;
     [SerializeField] private LayerMask water;
-    [SerializeField] private GameObject water_obj;
+    [SerializeField] private GameObject water_obj1;
+    [SerializeField] private GameObject water_obj2;
     private Water_control water_control;
     private bool water_mode = true;
     private Rigidbody2D rigid;
@@ -25,19 +26,19 @@ public class CharacterMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         cirCollider = GetComponent<CircleCollider2D>();
-        water_control = water_obj.GetComponent<Water_control>();
+        water_control = water_obj1.GetComponent<Water_control>();
     }
 
     private int Status() {
         RaycastHit2D[] hit = new RaycastHit2D[1];
-        cirCollider.Cast(cirCollider.offset + Vector2.down, hit, .1f);
+        cirCollider.Cast(cirCollider.bounds.center, hit, .1f);
         if (!IsAlive) return 10;
         if (hit[0].collider != null) {
             switch (hit[0].collider.gameObject.layer) {
                 case 3: return 0; // is grounded
                 case 4: {
                         Vector2 startpoint = new Vector2(cirCollider.bounds.center.x, cirCollider.bounds.center.y);
-                        hit[0] = Physics2D.Raycast(startpoint, Vector2.up, .1f, water);
+                        hit[0] = Physics2D.Raycast(startpoint, Vector2.zero, .1f, water);
                         if (hit[0].collider != null) return 2; // is underwater
                     }
                     return 1; // is on water surface
@@ -81,7 +82,7 @@ public class CharacterMove : MonoBehaviour
                     Timer.Create(timer);
                     timer_1s = 1f;
                     timer -= 1;
-                    if (timer < 0) StartCoroutine(Die());
+                    //if (timer < 0) StartCoroutine(Die());
                 }
                 else timer_1s -= Time.deltaTime;
             }
@@ -98,7 +99,7 @@ public class CharacterMove : MonoBehaviour
     }
 
     private void movement(int stat) {
-        float moveSpeed = 10f;
+        float moveSpeed = 12f;
         if (stat == 2) {
             Vector2 move = new Vector2();
             if (water_mode) {water_control.decDensity(); water_mode = false;}
@@ -130,7 +131,7 @@ public class CharacterMove : MonoBehaviour
 
     private void OnCollisionEnter2D (Collision2D col) {
         if (col.gameObject.tag.Equals("Water")) {
-            Debug.Log("Enter water");
+
         }
         else if (col.gameObject.tag.Equals("Enemy")) {
             StartCoroutine(Die());
@@ -149,7 +150,7 @@ public class CharacterMove : MonoBehaviour
         cirCollider.enabled = !cirCollider.enabled;
         rigid.velocity = new Vector2(0, 20f);
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Scene");
     }
 
     void Flip() {
