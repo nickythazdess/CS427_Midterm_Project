@@ -3,15 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Platform
+  - Enemy
+  - Water
+  - Coin
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Platform
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
@@ -38,6 +42,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Water
+    uniqueID: 3034953391
+    locked: 0
+  - name: Player
+    uniqueID: 3747033495
+    locked: 0
+  - name: Platform
+    uniqueID: 3589530357
+    locked: 0
+  - name: HUD
+    uniqueID: 3635490779
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
