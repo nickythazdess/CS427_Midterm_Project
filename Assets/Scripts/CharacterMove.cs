@@ -31,7 +31,7 @@ public class CharacterMove : MonoBehaviour
 
     private int Status() {
         RaycastHit2D[] hit = new RaycastHit2D[1];
-        cirCollider.Cast(cirCollider.bounds.center, hit, .1f);
+        cirCollider.Cast(Vector2.down, hit, .1f);
         if (!IsAlive) return 10;
         if (hit[0].collider != null) {
             switch (hit[0].collider.gameObject.layer) {
@@ -42,37 +42,25 @@ public class CharacterMove : MonoBehaviour
                         if (hit[0].collider != null) return 2; // is underwater
                     }
                     return 1; // is on water surface
-                default: return 3; // is in mid-air
+                default: return 4;
             };
         } else return 3; // is in mid-air
     }
-
-    private bool hitTheWall(int dir) {
-        Vector2 direction;
-        if (dir == 0) direction = Vector2.left;
-        else direction = Vector2.right;
-
-        RaycastHit2D[] hit = new RaycastHit2D[1];
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.layerMask = platform;
-        int num_hit = cirCollider.Cast(direction, filter, hit, .01f);
-        if (hit[0].collider != null) return true;
-        else return false;
-    } 
 
     // Update is called once per frame
     private void Update()
     {
         int curStatus = Status();
         Debug.Log("Status: " + curStatus);
-        //if (!IsAlive) anim.Play("Mario_Dead");
+        //if (!IsAlive) anim.Play("Dead");
         switch (curStatus) {
             case 0: anim.Play("Idle"); break;
             case 1: 
-                anim.Play("Swimming");
+                anim.Play("Idle");
                 if (!water_mode) { water_control.incDensity(); water_mode = true; }
                 break;
-            case 2: anim.Play("Idle"); break;
+            case 2: anim.Play("Swimming"); break;
+            case 3: anim.Play("Idle"); break;
             default: anim.Play("Idle"); break;
         }
 
@@ -89,7 +77,7 @@ public class CharacterMove : MonoBehaviour
         } else timer = 5;
         
         if (curStatus <= 2 && Input.GetKeyDown(KeyCode.Space)) {
-            float jumpSpeed = 10f;
+            float jumpSpeed = 50f;
             rigid.velocity = Vector2.up * jumpSpeed;
             
         }
@@ -117,10 +105,10 @@ public class CharacterMove : MonoBehaviour
 
             rigid.velocity = new Vector2(move.x * moveSpeed, move.y * moveSpeed);
         } else {
-            if (Input.GetKey(KeyCode.LeftArrow) && !hitTheWall(0)) {
+            if (Input.GetKey(KeyCode.LeftArrow)) {
                 rigid.velocity = new Vector2(-moveSpeed, rigid.velocity.y);
                 if (isFacingRight) Flip();
-            } else if (Input.GetKey(KeyCode.RightArrow) && !hitTheWall(1)) {
+            } else if (Input.GetKey(KeyCode.RightArrow)) {
                 rigid.velocity = new Vector2(moveSpeed, rigid.velocity.y);
                 if (!isFacingRight) Flip();
             } else if (Input.GetKey(KeyCode.DownArrow) && (stat == 1)) {
