@@ -9,7 +9,8 @@ public class CharacterMove : MonoBehaviour
     [SerializeField] private LayerMask water;
     [SerializeField] private GameObject water_obj1;
     [SerializeField] private GameObject water_obj2;
-    private Water_control water_control;
+    private Water_control water_control1;
+    private Water_control water_control2;
     private bool water_mode = true;
     private Rigidbody2D rigid;
     private Animator anim;
@@ -26,7 +27,8 @@ public class CharacterMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         cirCollider = GetComponent<CircleCollider2D>();
-        water_control = water_obj1.GetComponent<Water_control>();
+        water_control1 = water_obj1.GetComponent<Water_control>();
+        water_control2 = water_obj2.GetComponent<Water_control>();
     }
 
     private int Status() {
@@ -57,7 +59,7 @@ public class CharacterMove : MonoBehaviour
             case 0: anim.Play("Idle"); break;
             case 1: 
                 anim.Play("Idle");
-                if (!water_mode) { water_control.incDensity(); water_mode = true; }
+                if (!water_mode) { water_control1.incDensity(); water_control2.incDensity(); water_mode = true; }
                 break;
             case 2: anim.Play("Swimming"); break;
             case 3: anim.Play("Idle"); break;
@@ -90,7 +92,7 @@ public class CharacterMove : MonoBehaviour
         float moveSpeed = 12f;
         if (stat == 2) {
             Vector2 move = new Vector2();
-            if (water_mode) {water_control.decDensity(); water_mode = false;}
+            if (water_mode) {water_control1.decDensity(); water_control2.decDensity(); water_mode = false;}
             if (Input.GetKey(KeyCode.LeftArrow)) {
                 move = Vector2.left;
                 if (isFacingRight) Flip();
@@ -112,7 +114,7 @@ public class CharacterMove : MonoBehaviour
                 rigid.velocity = new Vector2(moveSpeed, rigid.velocity.y);
                 if (!isFacingRight) Flip();
             } else if (Input.GetKey(KeyCode.DownArrow) && (stat == 1)) {
-                water_control.decDensity(); water_mode = false;
+                water_control1.decDensity(); water_control2.decDensity(); water_mode = false;
             } else rigid.velocity = new Vector2(0, rigid.velocity.y);
         }
     }
