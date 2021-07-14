@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         bloomTimer -= Time.deltaTime;
         Debug.Log(bloomTimer);
         if (bloomTimer < 0) {
-            cirCollider.radius = 10.0f;
+            cirCollider.radius = 5.5f;
             blooming -= Time.deltaTime;
             anim.Play("Bloom");
             if (blooming < 0) {

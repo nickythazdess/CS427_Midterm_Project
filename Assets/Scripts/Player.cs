@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && ((character != 1 && curStatus <= 2) 
                                                 || (character == 1 && curStatus <= 3))) 
             {
-                float jumpSpeed = 12f;
+                float jumpSpeed = 15f;
                 rigid.velocity = Vector2.up * jumpSpeed;
                 jumpSound.Play();
             }
@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
     }
 
     private void movement(int stat) {
-        float moveSpeed = 12f;
+        float moveSpeed = 10f;
         if (stat == 2) {
             Vector2 move = new Vector2();
             if (water_mode) { Water_control.decDensity(); water_mode = false;}
