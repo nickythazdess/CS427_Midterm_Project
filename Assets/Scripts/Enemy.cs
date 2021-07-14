@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     private float blooming;
     private Animator anim;
     private CircleCollider2D cirCollider;
+    [SerializeField] private AudioSource die;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour
     }
 
     public void Die() {
+        die.Play();
         Destroy(gameObject);
     }
 }

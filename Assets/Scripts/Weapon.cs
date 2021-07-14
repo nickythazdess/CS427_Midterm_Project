@@ -6,12 +6,14 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] private Transform firePoint;
     [SerializeField] public GameObject bulletpf;
+    [SerializeField] public AudioSource attack;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Fire1")) {
             Shoot();
+            attack.Play();
         }
     }
 

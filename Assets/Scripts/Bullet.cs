@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public Rigidbody2D rigid;
+    private Rigidbody2D rigid;
+    [SerializeField] private AudioSource bullet_hit;
     private float disappearTimer;
     // Start is called before the first frame update
     void Start()
@@ -24,10 +25,13 @@ public class Bullet : MonoBehaviour
     }
 
     void OnTriggerEnter2D (Collider2D hit) {
+        bullet_hit.Play();
         Enemy enemy = hit.GetComponent<Enemy>();
         if (enemy != null) {
             enemy.Die();
         }
-        Destroy(gameObject);
+        if (!hit.tag.Equals("Water")) {
+            Destroy(gameObject);
+        }
     }
 }
