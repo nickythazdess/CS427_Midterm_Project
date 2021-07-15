@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_g : MonoBehaviour
+public class Enemy_g : Enemy
 {
     private float bloomTimer;
     private float blooming;
     private Animator anim;
     private CircleCollider2D cirCollider;
-    [SerializeField] private AudioSource die;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +17,6 @@ public class Enemy_g : MonoBehaviour
         blooming = 0.5f;
         anim.Play("Normal_g");
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -37,10 +34,5 @@ public class Enemy_g : MonoBehaviour
                 cirCollider.radius = 3.0f;
             }
         }
-    }
-
-    public void Die() {
-        die.Play();
-        Destroy(gameObject);
     }
 }

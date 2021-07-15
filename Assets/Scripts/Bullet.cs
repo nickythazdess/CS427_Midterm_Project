@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
     }
 
     void OnTriggerEnter2D (Collider2D hit) {
-        bullet_hit.Play();
+        //bullet_hit.Play();
         Enemy enemy = hit.GetComponent<Enemy>();
         if (enemy != null) {
             enemy.Die();

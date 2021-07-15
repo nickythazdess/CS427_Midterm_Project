@@ -539,7 +539,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -659476517
-  m_SortingLayer: -1
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 8584269105170925759, guid: 8da9446b685cfcf40befd2cb0a21c1d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1060,8 +1060,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: c98c503bd53d1d345a378cc00a8ded8f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1427,7 +1427,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -659476517
-  m_SortingLayer: -1
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: -3800918695012253203, guid: 4897516d09bc4d643889fb40671b466d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1680,7 +1680,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -659476517
-  m_SortingLayer: -1
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 6286595657586805340, guid: e330cb7b0793527469765cd6ab2e86ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1739,7 +1739,7 @@ MonoBehaviour:
   list:
   - splash: {fileID: 2079899507}
     name: Ankan
-    description: Normal character. Can breathe underwater for 5 seconds.
+    description: Can breathe underwater for 5 seconds.
     characterColor: {r: 1, g: 0.33333334, b: 0.33333334, a: 0.5882353}
     button: {fileID: -5668518402485374812, guid: 3f41592e576b5e940921be22100552fb, type: 3}
     start: {fileID: 657193517335828509, guid: 9d08a3e6588a2934f88a6a9828820c79, type: 3}

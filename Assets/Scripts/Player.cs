@@ -5,10 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    [Header("Layer")]
     [SerializeField] private LayerMask platform;
     [SerializeField] private LayerMask water;
+
+    [Header("Win canvas")]
+    [SerializeField] private GameObject completeGameUI;
+
+    [Header("Sound")]
     [SerializeField] private AudioSource jumpSound;
+    [SerializeField] private AudioSource theme;
+    [SerializeField] private AudioSource victorySound;
     [SerializeField] private AudioSource loseSound;
+    [SerializeField] public AudioSource attack;
+
+    [Header("Weapon")]
+    [SerializeField] private Transform firePoint;
+    [SerializeField] public GameObject bulletpf;
+    
+
     private bool water_mode = true;
     private Rigidbody2D rigid;
     private Animator anim;
@@ -27,6 +42,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         cirCollider = GetComponent<CircleCollider2D>();
         character = PlayerPrefs.GetInt("Character");
+        //completeGameUI.SetActive(false); 
     }
 
     private int Status() {
@@ -51,7 +67,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         int curStatus = Status();
-        Debug.Log("Status: " + curStatus);
         //if (!IsAlive) anim.Play("Dead");
         if (IsAlive) {
             PlayAnim(curStatus);
@@ -67,11 +82,20 @@ public class Player : MonoBehaviour
                 rigid.velocity = Vector2.up * jumpSpeed;
                 jumpSound.Play();
             }
+
+            if (Input.GetButtonDown("Fire1")) {
+                Shoot();
+                attack.Play();
+            }
             
             if (curStatus <= 3) movement(curStatus);
             if (prevStatus != curStatus) prevStatus = curStatus;
             if (timer < 0) StartCoroutine(Die());
         }
+    }
+
+    void Shoot() {
+        Instantiate(bulletpf, firePoint.position, firePoint.rotation);
     }
 
     private void movement(int stat) {
@@ -190,11 +214,15 @@ public class Player : MonoBehaviour
     }
 
     private void OnCollisionEnter2D (Collision2D col) {
-        if (col.gameObject.tag.Equals("Water")) {
-
-        }
-        else if (col.gameObject.tag.Equals("Enemy")) {
+        if (col.gameObject.tag.Equals("Enemy")) {
             StartCoroutine(Die());
+        } else if (col.gameObject.tag.Equals("Win")) {
+            Debug.Log("Win");
+            completeGameUI.SetActive(true);
+            col.gameObject.GetComponent<Animator>().Play("Chest");
+            theme.Stop();
+            IsAlive = false;
+            victorySound.Play();
         }
     }
 

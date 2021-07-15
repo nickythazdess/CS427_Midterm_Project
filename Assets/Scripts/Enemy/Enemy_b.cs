@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_o : Enemy
+public class Enemy_b : Enemy
 {
     private float bloomTimer;
     private float blooming;
@@ -15,7 +15,7 @@ public class Enemy_o : Enemy
         cirCollider = GetComponent<CircleCollider2D>();
         bloomTimer = 3f;
         blooming = 0.5f;
-        anim.Play("Normal_o");
+        anim.Play("Normal");
     }
 
     // Update is called once per frame
@@ -26,11 +26,11 @@ public class Enemy_o : Enemy
         if (bloomTimer < 0) {
             cirCollider.radius = 5.5f;
             blooming -= Time.deltaTime;
-            anim.Play("Bloom_o");
+            anim.Play("Bloom");
             if (blooming < 0) {
                 bloomTimer = 3f;
                 blooming = 0.5f;
-                anim.Play("Normal_o");
+                anim.Play("Normal");
                 cirCollider.radius = 3.0f;
             }
         }
