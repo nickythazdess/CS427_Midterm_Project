@@ -50,6 +50,10 @@ public class CharacterSelection : MonoBehaviour
         Loader.Load(Loader.Scene.Scene);
     }
 
+    public void BackToMain() {
+        Loader.Load(Loader.Scene.MainMenu);
+    }
+
     private void UpdateCharacterSelectionUI() {
         int left = selectedCharacterIndex - 1;
         int right = selectedCharacterIndex + 1;
