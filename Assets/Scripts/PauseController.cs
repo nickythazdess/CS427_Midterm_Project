@@ -13,6 +13,7 @@ public class PauseController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("pause");
             if (!gameIsPaused) {
                 PauseGame();
             } else {
@@ -22,30 +23,30 @@ public class PauseController : MonoBehaviour
     }
     public void PauseGame()
     {
-        GameAssets.i.button_click.Play();
         gameIsPaused = true;
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
+        click.Play();
     }
 
     public void ResumeGame()
     {
         gameIsPaused = false;
-        GameAssets.i.button_click.Play();
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
+        click.Play();
     }
 
     public void RestartGame()
     {
-        GameAssets.i.button_click.Play();
         SceneManager.LoadScene("Scene");
+        click.Play();
         Time.timeScale = 1f;
     }
 
     public void QuitGame()
     {
-        GameAssets.i.button_click.Play();
         SceneManager.LoadScene("MainMenu");
+        click.Play();
     }
 }
