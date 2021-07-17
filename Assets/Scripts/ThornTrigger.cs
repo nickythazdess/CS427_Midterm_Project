@@ -9,7 +9,6 @@ public class ThornTrigger : MonoBehaviour
 
     void Start() {
         rigid = GetComponent<Rigidbody2D>();
-
     }
 
     void Update() {
@@ -18,6 +17,5 @@ public class ThornTrigger : MonoBehaviour
             rigid.gravityScale = 3f;
             enabled = false;
         }
-        
     }
 }

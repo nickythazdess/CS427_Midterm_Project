@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     private int Status() {
         RaycastHit2D[] hit = new RaycastHit2D[1];
         cirCollider.Cast(Vector2.down, hit, .1f);
-        if (!IsAlive) return 10;
+        if (!IsAlive) return 10; // is dead
         if (hit[0].collider != null) {
             switch (hit[0].collider.gameObject.layer) {
                 case 3: return 0; // is grounded
@@ -70,27 +70,30 @@ public class Player : MonoBehaviour
         int curStatus = Status();
         //if (!IsAlive) anim.Play("Dead");
         if (IsAlive) {
-            PlayAnim(curStatus);
-
-            if (character == 0) countdown_red(curStatus);
-            else if (character == 1) countdown_yellow(curStatus);
-            else if (character == 2) countdown_green(curStatus);
+            PlayAnim(curStatus); //play animation
+            //set countdown timer according to character's characteristic
+            if (character == 0) countdown_red(curStatus); // Ankan
+            else if (character == 1) countdown_yellow(curStatus); // Anken
+            else if (character == 2) countdown_green(curStatus); // Ankin
             
+            //jumping check
             if (Input.GetKeyDown(KeyCode.Space) && ((character != 1 && curStatus <= 2) 
                                                 || (character == 1 && curStatus <= 3))) 
-            {
+            {   // If the character is Anken then player can jump infinitely
                 float jumpSpeed = 15f;
                 rigid.velocity = Vector2.up * jumpSpeed;
                 jumpSound.Play();
             }
 
+            //if player press Z bullet will be fired
             if (Input.GetButtonDown("Fire1")) {
                 Shoot();
                 attack.Play();
             }
-            
+            // if the character is not in undefined state or dead, player can move
             if (curStatus <= 3) movement(curStatus);
             if (prevStatus != curStatus) prevStatus = curStatus;
+            //if timer runs out, character will die
             if (timer < 0) StartCoroutine(Die());
         }
     }
@@ -130,8 +133,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void countdown_red(int curStatus) {
-        if (curStatus == 2) {
+    private void countdown_red(int curStatus) { //Ankan
+        if (curStatus == 2) { 
             if (curStatus == prevStatus) {
                 if (timer_1s < 0) {
                     Timer.Create(timer);
@@ -140,11 +143,11 @@ public class Player : MonoBehaviour
                 }
                 else timer_1s -= Time.deltaTime;
             }
-        } else timer = 5;
+        } else timer = 5; //5 seconds underwater
     }
 
-    private void countdown_yellow(int curStatus) {
-        if (curStatus == 2 || curStatus == 0) {
+    private void countdown_yellow(int curStatus) { //Ankin
+        if (curStatus == 2 || curStatus == 0) { 
             if (curStatus == prevStatus) {
                 if (timer_1s < 0) {
                     Timer.Create(timer);
@@ -153,10 +156,10 @@ public class Player : MonoBehaviour
                 }
                 else timer_1s -= Time.deltaTime;
             }
-        } else timer = 2;
+        } else timer = 2; //2 seconds if not in mid-air
     }
 
-    private void countdown_green(int curStatus) {
+    private void countdown_green(int curStatus) { //Ankin
         if (curStatus != 1 && curStatus != 2) {
             if (curStatus == prevStatus) {
                 if (timer_1s < 0) {
@@ -166,7 +169,7 @@ public class Player : MonoBehaviour
                 }
                 else timer_1s -= Time.deltaTime;
             }
-        } else timer = 5;
+        } else timer = 5; //5 secounds off-water
     }
 
     private void PlayAnim(int curStatus) {
@@ -226,13 +229,6 @@ public class Player : MonoBehaviour
             victorySound.Play();
         }
     }
-
-    private void OnCollisionExit2D (Collision2D col) {
-        if (col.gameObject.tag.Equals("Water")) {
-            Debug.Log("Get out of water");
-        }
-    }
-
     IEnumerator Die()
     {
         IsAlive = false;
@@ -241,6 +237,12 @@ public class Player : MonoBehaviour
         rigid.velocity = new Vector2(0, 20f);
         yield return new WaitForSeconds(3);
         Loader.Load(Loader.Scene.Scene);
+    }
+
+    private void OnCollisionExit2D (Collision2D col) {
+        if (col.gameObject.tag.Equals("Water")) {
+            Debug.Log("Get out of water");
+        }
     }
 
     void Flip() {
