@@ -7,4 +7,6 @@ Group 7 - 100kg:
 18125035 - Nguyễn Thành Đạt  
 18125138 - Huỳnh Nhật Tân  
 
-A mini platformer game. Use arrow keys to move, Space to jump and Z to shoot bullets. Simple :">
+A mini 2D platformer game. Use arrow keys to move, Space to jump and Z to shoot bullets. Simple :">
+
+Demo video: https://www.youtube.com/watch?v=Q-zAfoEcKGo
